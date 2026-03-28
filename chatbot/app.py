@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, jsonify
 from google import genai
 from google.genai import types
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", static_url_path="")
 
 _, project = google.auth.default(request=Request())
 
@@ -199,3 +199,4 @@ def navigate():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+

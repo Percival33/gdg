@@ -1,7 +1,7 @@
-import React from 'react';
-import { Restaurant } from '../../types';
-import RestaurantCard from '../RestaurantCard/RestaurantCard';
-import './ResultsList.css';
+import React from "react";
+import type { Restaurant } from "../../types";
+import RestaurantCard from "../RestaurantCard/RestaurantCard";
+import "./ResultsList.css";
 
 interface ResultsListProps {
   restaurants: Restaurant[];
