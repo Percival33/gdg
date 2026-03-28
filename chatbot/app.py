@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, jsonify
 from google import genai
 from google.genai import types
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", static_url_path="")
 
 _, project = google.auth.default(request=Request())
 
