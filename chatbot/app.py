@@ -10,12 +10,20 @@ from google.genai import types
 
 app = Flask(__name__, static_folder="static", static_url_path="")
 
-_, project = google.auth.default(request=Request())
+try:
+    _, project = google.auth.default(request=Request())
+except google.auth.exceptions.DefaultCredentialsError:
+    # Local development without Google Cloud credentials
+    project = os.environ.get("GOOGLE_CLOUD_PROJECT", "local-dev")
 
 model = os.environ.get("MODEL", "gemini-3.1-flash-lite-preview")
 location = os.environ.get("VERTEX_LOCATION", "global")
 
-client = genai.Client(vertexai=True, project=project, location=location)
+try:
+    client = genai.Client(vertexai=True, project=project, location=location)
+except Exception:
+    # Local development without proper GCP setup
+    client = None
 
 def search_nearby_places(query: str, location: str, radius: int = 1500) -> dict:
     """
@@ -92,7 +100,7 @@ def index():
     return render_template("index.html", model=model)
 
 
-@app.route("/chat", methods=["POST"])
+@app.route("/api/chat", methods=["POST"])
 def chat():
     data = request.json
     user_message = data.get("message", "")
