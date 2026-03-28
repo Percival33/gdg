@@ -7,7 +7,7 @@ export const useChat = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const base = (import.meta.env.VITE_CHATBOT_URL as string) || "/api";
+  const base = "/api";
 
   const sendMessage = useCallback(
     async (message: string, context?: any) => {

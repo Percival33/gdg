@@ -54,16 +54,20 @@ export const useDishSearch = () => {
     setIsLoading(true);
     setError(null);
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     try {
-      const normalizedQuery = query.toLowerCase().trim();
-      const mockResults = MOCK_DATA[normalizedQuery] || [];
-      setResults(mockResults);
-      if (mockResults.length === 0) {
-        // We still return empty array, not necessarily an error
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: `Find restaurants serving ${query}` }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
       }
+
+      const data = await res.json();
+      // For now, parse the response or return empty - backend handles the search
+      setResults([]);
     } catch (err) {
       setError("Failed to fetch results. Please try again.");
     } finally {
