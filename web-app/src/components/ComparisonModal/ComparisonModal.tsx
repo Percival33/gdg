@@ -1,6 +1,6 @@
-import React from 'react';
-import { Restaurant } from '../../types';
-import './ComparisonModal.css';
+import React from "react";
+import type { Restaurant } from "../../types";
+import "./ComparisonModal.css";
 
 interface ComparisonModalProps {
   restaurants: Restaurant[];
@@ -18,7 +18,9 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({
       <div className="comparison-modal">
         <div className="modal-header">
           <h2>Compare Restaurants</h2>
-          <button className="close-button" onClick={onClose}>&times;</button>
+          <button className="close-button" onClick={onClose}>
+            &times;
+          </button>
         </div>
         <div className="modal-content">
           <div className="comparison-grid">
@@ -27,7 +29,9 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 <div className="comp-item name">{r.name}</div>
                 <div className="comp-item rating">⭐ {r.rating}</div>
                 <div className="comp-item distance">{r.distance}</div>
-                <div className="comp-item price">{''.padStart(r.priceLevel, '$')}</div>
+                <div className="comp-item price">
+                  {"".padStart(r.priceLevel, "$")}
+                </div>
               </div>
             ))}
           </div>
