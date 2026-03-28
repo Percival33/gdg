@@ -1,20 +1,22 @@
-import { useState } from 'react';
-import SearchBar from './components/SearchBar/SearchBar';
-import ResultsList from './components/ResultsList/ResultsList';
-import ComparisonModal from './components/ComparisonModal/ComparisonModal';
-import LoadingSpinner from './components/Common/LoadingSpinner';
-import ErrorMessage from './components/Common/ErrorMessage';
-import { useDishSearch } from './hooks/useDishSearch';
-import './index.css';
+import { useState } from "react";
+import SearchBar from "./components/SearchBar/SearchBar";
+import ResultsList from "./components/ResultsList/ResultsList";
+import ComparisonModal from "./components/ComparisonModal/ComparisonModal";
+import LoadingSpinner from "./components/Common/LoadingSpinner";
+import ErrorMessage from "./components/Common/ErrorMessage";
+import { useDishSearch } from "./hooks/useDishSearch";
+import ChatWidget from "./components/Common/ChatWidget/ChatWidget";
+import "./index.css";
 
 function App() {
   const { results, isLoading, error, search } = useDishSearch();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const handleSelect = (id: string) => {
     setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
     );
   };
 
@@ -24,13 +26,16 @@ function App() {
     <div className="app-container">
       <header>
         <h1>Crave Finder</h1>
+        <button style={{ marginLeft: 12 }} onClick={() => setIsChatOpen(true)}>
+          Chat
+        </button>
       </header>
-      
+
       <main>
         <SearchBar onSearch={search} isLoading={isLoading} />
-        
+
         {error && <ErrorMessage message={error} />}
-        
+
         {isLoading ? (
           <LoadingSpinner />
         ) : (
@@ -55,6 +60,12 @@ function App() {
           restaurants={selectedRestaurants}
           onClose={() => setIsModalOpen(false)}
         />
+      )}
+
+      {isChatOpen && (
+        <div style={{ position: "fixed", right: 20, bottom: 20 }}>
+          <ChatWidget onClose={() => setIsChatOpen(false)} />
+        </div>
       )}
     </div>
   );
