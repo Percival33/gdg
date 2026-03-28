@@ -21,7 +21,7 @@ export const useDishSearch = () => {
         throw new Error(`HTTP ${res.status}`);
       }
 
-      const _data = await res.json();
+      await res.json();
       // For now, parse the response or return empty - backend handles the search
       setResults([]);
     } catch (err) {
