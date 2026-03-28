@@ -13,8 +13,7 @@ FROM python:3.12-slim
 ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
-# Install Python dependencies and nginx
-RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
+# Install Python dependencies
 COPY chatbot/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -28,13 +27,6 @@ COPY --from=frontend-build /app/web-app/dist/ /app/chatbot/static/
 RUN mkdir -p /app/chatbot/templates \
     && if [ -f /app/chatbot/static/index.html ]; then cp /app/chatbot/static/index.html /app/chatbot/templates/index.html; fi
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/sites-available/default
-
-# Copy entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
 EXPOSE 8080
 WORKDIR /app/chatbot
-CMD ["/app/entrypoint.sh"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
