@@ -10,11 +10,11 @@ RUN npm run build
 FROM nginx:stable-alpine AS production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Configure Nginx to listen on port 8080 (required for Cloud Run)
+# Configure Nginx to listen on port 4173
 # Also configure for client-side routing by trying to serve index.html for missing files
 RUN echo 'server { \
-    listen 8080; \
-    listen [::]:8080; \
+    listen 4173; \
+    listen [::]:4173; \
     server_name _; \
     root /usr/share/nginx/html; \
     index index.html; \
@@ -23,5 +23,5 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/conf.d/default.conf
 
-EXPOSE 8080
+EXPOSE 4173
 CMD ["nginx", "-g", "daemon off;"]
