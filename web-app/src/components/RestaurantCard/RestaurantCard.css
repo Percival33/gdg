@@ -1,0 +1,77 @@
+.restaurant-card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  border: 1px solid #e2e8f0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.restaurant-card.best-match {
+  border: 2px solid var(--primary-color);
+  background-color: #fefce8;
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.restaurant-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.rating {
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--secondary-color);
+}
+
+.card-actions {
+  margin-top: 0.5rem;
+}
+
+.compare-button {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.compare-button:hover {
+  background-color: rgba(79, 70, 229, 0.05);
+}
+
+.compare-button.selected {
+  background-color: var(--primary-color);
+  color: white;
+}

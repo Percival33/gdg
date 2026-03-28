@@ -1,0 +1,23 @@
+steps:
+  # Build the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/restaurant-dish-search-ui', '.']
+
+  # Push the image to GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/restaurant-dish-search-ui']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'restaurant-dish-search-ui'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/restaurant-dish-search-ui'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'

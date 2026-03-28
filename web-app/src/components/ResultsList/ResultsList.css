@@ -1,0 +1,13 @@
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.empty-results {
+  text-align: center;
+  padding: 2rem;
+  color: var(--secondary-color);
+  font-style: italic;
+}
