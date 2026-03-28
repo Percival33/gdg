@@ -35,9 +35,18 @@ export const useChat = () => {
           }
 
           const data = await res.json();
-          setResponse(data);
+          // Map backend response to frontend format
+          const formattedResponse = {
+            reply: data.response,
+            metadata: {
+              destination: data.destination,
+              navigation_url: data.navigation_url,
+              session_id: data.session_id,
+            },
+          };
+          setResponse(formattedResponse);
           setLoading(false);
-          return data;
+          return formattedResponse;
         } catch (err: any) {
           attempt += 1;
           if (attempt >= maxAttempts) {
